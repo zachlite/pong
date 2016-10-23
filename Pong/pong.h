@@ -10,22 +10,16 @@
 #define pong_h
 
 #include "SDL2/SDL.h"
-
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-const int FRAMES_PER_SECOND = 30;
-const float SECONDS_PER_FRAME = (1 * 1000) / FRAMES_PER_SECOND;
+#include "gui.h"
 
 class Pong {
     
 private:
-    SDL_Window *window;
-    SDL_Surface *surface;
+    
+    GUI gui;
     bool quit;
     
-    void Render();
-    void PollEvents(SDL_Event event);
-    void HandleKeyUp(SDL_Event event);
+    void HandleEvent();
     
 public:
     Pong();

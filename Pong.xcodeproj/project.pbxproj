@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		922FAB6B1DB9BC0200742E03 /* pong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 922FAB6A1DB9BC0200742E03 /* pong.cpp */; };
+		927D1F451DBD4180009E24E7 /* gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 927D1F441DBD4180009E24E7 /* gui.cpp */; };
 		92CB74801DB6EF4F0055C80A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CB747F1DB6EF4F0055C80A /* main.cpp */; };
 		92CB74871DB6EF670055C80A /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92CB74861DB6EF670055C80A /* SDL2.framework */; };
+		92EA379B1DBD599B00C1882C /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92EA379A1DBD599B00C1882C /* SDL2_image.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,10 +29,14 @@
 /* Begin PBXFileReference section */
 		922FAB6A1DB9BC0200742E03 /* pong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pong.cpp; sourceTree = "<group>"; };
 		922FAB6C1DB9BC2000742E03 /* pong.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pong.h; sourceTree = "<group>"; };
+		927D1F441DBD4180009E24E7 /* gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gui.cpp; sourceTree = "<group>"; };
+		927D1F461DBD418B009E24E7 /* gui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gui.h; sourceTree = "<group>"; };
 		92CB747C1DB6EF4F0055C80A /* Pong */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Pong; sourceTree = BUILT_PRODUCTS_DIR; };
 		92CB747F1DB6EF4F0055C80A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		92CB74861DB6EF670055C80A /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
-		92CB748A1DB7012B0055C80A /* img.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = img.bmp; sourceTree = "<group>"; };
+		92EA379A1DBD599B00C1882C /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
+		92EA379D1DBD608A00C1882C /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = test.png; path = img/test.png; sourceTree = "<group>"; };
+		92EA379F1DBD60CD00C1882C /* img.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = img.bmp; path = img/img.bmp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92EA379B1DBD599B00C1882C /* SDL2_image.framework in Frameworks */,
 				92CB74871DB6EF670055C80A /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,8 +55,8 @@
 		92CB74731DB6EF4F0055C80A = {
 			isa = PBXGroup;
 			children = (
-				92CB748A1DB7012B0055C80A /* img.bmp */,
 				92CB74861DB6EF670055C80A /* SDL2.framework */,
+				92EA379A1DBD599B00C1882C /* SDL2_image.framework */,
 				92CB747E1DB6EF4F0055C80A /* Pong */,
 				92CB747D1DB6EF4F0055C80A /* Products */,
 			);
@@ -66,11 +73,23 @@
 		92CB747E1DB6EF4F0055C80A /* Pong */ = {
 			isa = PBXGroup;
 			children = (
+				92EA379E1DBD609D00C1882C /* img */,
 				92CB747F1DB6EF4F0055C80A /* main.cpp */,
 				922FAB6A1DB9BC0200742E03 /* pong.cpp */,
 				922FAB6C1DB9BC2000742E03 /* pong.h */,
+				927D1F441DBD4180009E24E7 /* gui.cpp */,
+				927D1F461DBD418B009E24E7 /* gui.h */,
 			);
 			path = Pong;
+			sourceTree = "<group>";
+		};
+		92EA379E1DBD609D00C1882C /* img */ = {
+			isa = PBXGroup;
+			children = (
+				92EA379F1DBD60CD00C1882C /* img.bmp */,
+				92EA379D1DBD608A00C1882C /* test.png */,
+			);
+			name = img;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				927D1F451DBD4180009E24E7 /* gui.cpp in Sources */,
 				92CB74801DB6EF4F0055C80A /* main.cpp in Sources */,
 				922FAB6B1DB9BC0200742E03 /* pong.cpp in Sources */,
 			);

@@ -11,6 +11,39 @@
 #include "SDL2/SDL.h"
 #include "pong.h"
 
+//Pong
+//
+//private:
+//Window window
+//
+//
+//public:
+//Initialize()
+//Start()
+//Destroy()
+//
+//
+//________________________
+//
+//
+//Window
+//
+//private:
+//
+//
+//public:
+//Initialize()
+//Destroy()
+//Render()
+//PollEvents()
+//
+//
+//
+//
+
+
+
+
 
 Pong::Pong() {
     
@@ -21,98 +54,57 @@ Pong::~Pong() {
 }
 
 bool Pong::Initialize() {
-    
-    this->quit = false;
-    
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        fprintf(stderr, "SDL video initialization failed: %s", SDL_GetError());
+    if(!gui.Initialize()){
         return false;
     }
     
-    this->window = SDL_CreateWindow("Pong", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (!this->window) {
-        fprintf(stderr, "SDL window creation failed: %s", SDL_GetError());
-        return false;
-    }
+    // put an image on the screen
+    SDL_Surface *img = gui.LoadImage("Pong/img/test.png");
+    SDL_Rect img_rect;
+    img_rect.x = 23;
+    img_rect.y = 31;
+    img_rect.w = 100;
+    img_rect.h = 20;
+    gui.Render(img, img_rect);
     
-    this->surface = SDL_GetWindowSurface(window);
-    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0xff, 0x00, 0xee));
-    SDL_UpdateWindowSurface(window);
     
     return true;
 }
 
+void Pong::Destroy() {
+    gui.Destroy();
+}
+
 void Pong::Start() {
-    
-    int frames = 0;
-    SDL_Event event;
+
+//    SDL_Event event;
+    std::string poll;
     
     while (!this->quit) {
         
         int frame_start_time = SDL_GetTicks();
     
-        // handle events
-        this->PollEvents(event);
+//         handle events
+//        this->PollEvents(event);
         
     
         // do things
     
         
         // render
-        this->Render();
+//        this->Render();
+        SDL_Delay(10);
         
         
-        float average_fps = frames / (SDL_GetTicks() / 1000.0f);
-        printf("%f\n", average_fps);
-        frames++;
-        
+    
         int frame_time = SDL_GetTicks() - frame_start_time;
-        if (frame_time < SECONDS_PER_FRAME) {
-            SDL_Delay(SECONDS_PER_FRAME - frame_time);
-        }
-    }
-}
-
-void Pong::PollEvents(SDL_Event event) {
-    while (SDL_PollEvent(&event)) {
         
-        switch (event.type) {
-            case SDL_QUIT:
-                this->quit = true;
-                break;
-                
-            case SDL_KEYUP:
-                this->HandleKeyUp(event);
-                break;
-                
-            default:
-                break;
+        if (frame_time < GUI::SECONDS_PER_FRAME) {
+            SDL_Delay(GUI::SECONDS_PER_FRAME - frame_time);
         }
         
     }
 }
 
-void Pong::HandleKeyUp(SDL_Event event) {
-    switch (event.key.keysym.sym) {
-        case SDLK_UP:
-            printf("up key pressed!\n");
-            break;
-            
-        case SDLK_DOWN:
-            printf("down key pressed!\n");
-            break;
-            
-        default:
-            break;
-    }
 
-}
 
-void Pong::Render() {
-    // draw everything on screen
-}
-
-void Pong::Destroy() {
-    SDL_DestroyWindow(this->window);
-    SDL_Quit();
-}

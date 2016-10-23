@@ -12,17 +12,27 @@
 
 
 int main(int argc, const char * argv[]) {
-    
 
     Pong pong;
-
-    if (!pong.Initialize()) {
-        return 1;
+    if(!pong.Initialize()){
+        return false;
     }
     
     pong.Start();
-    pong.Destroy();
+    
     return 0;
+    
+    
+//
+//    Pong pong;
+//
+//    if (!pong.Initialize()) {
+//        return 1;
+//    }
+//    
+//    pong.Start();
+//    pong.Destroy();
+//    return 0;
 
     
 //    SDL_Surface *img = NULL;
