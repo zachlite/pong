@@ -11,40 +11,6 @@
 #include "SDL2/SDL.h"
 #include "pong.h"
 
-//Pong
-//
-//private:
-//Window window
-//
-//
-//public:
-//Initialize()
-//Start()
-//Destroy()
-//
-//
-//________________________
-//
-//
-//Window
-//
-//private:
-//
-//
-//public:
-//Initialize()
-//Destroy()
-//Render()
-//PollEvents()
-//
-//
-//
-//
-
-
-
-
-
 Pong::Pong() {
     
 }
@@ -54,22 +20,17 @@ Pong::~Pong() {
 }
 
 bool Pong::Initialize() {
-    if(!gui.Initialize()){
+    
+    if(!this->gui.Initialize()){
         return false;
     }
     
-    // put an image on the screen
-    SDL_Surface *img = gui.LoadImage("Pong/img/test.png");
-    SDL_Rect img_rect;
-    img_rect.x = 23;
-    img_rect.y = 31;
-    img_rect.w = 100;
-    img_rect.h = 20;
-    gui.Render(img, img_rect);
-    
+    this->player_1.Initialize(PLAYER_1, gui.LoadTexture("Pong/img/test.png"));
+    this->player_2.Initialize(PLAYER_2, gui.LoadTexture("Pong/img/test.png"));
     
     return true;
 }
+
 
 void Pong::Destroy() {
     gui.Destroy();
@@ -77,34 +38,44 @@ void Pong::Destroy() {
 
 void Pong::Start() {
 
-//    SDL_Event event;
+    SDL_Event event;
     std::string poll;
     
     while (!this->quit) {
         
         int frame_start_time = SDL_GetTicks();
     
-//         handle events
-//        this->PollEvents(event);
-        
+        // handle events
+        this->ProcessInput(event);
     
-        // do things
-    
+        gui.PrepareRender();
         
-        // render
-//        this->Render();
-        SDL_Delay(10);
+        gui.RenderTexture(this->player_1.GetPaddle().texture, this->player_1.GetPaddle().rect);
+        gui.RenderTexture(this->player_2.GetPaddle().texture, this->player_2.GetPaddle().rect);
         
+        gui.Update();
         
-    
         int frame_time = SDL_GetTicks() - frame_start_time;
         
         if (frame_time < GUI::SECONDS_PER_FRAME) {
             SDL_Delay(GUI::SECONDS_PER_FRAME - frame_time);
         }
-        
     }
 }
 
-
-
+void Pong::ProcessInput(SDL_Event e) {
+    while (SDL_PollEvent(&e)) {
+        
+        if (e.type == SDL_QUIT) {
+            printf("see ya\n");
+            this->quit = true;
+        }
+    
+        this->player_1.HandleEvents(e);
+        this->player_2.HandleEvents(e);
+    }
+    
+    const Uint8 *state = SDL_GetKeyboardState(NULL);
+    this->player_1.HandleContinuousEvents(state);
+    this->player_2.HandleContinuousEvents(state);
+}

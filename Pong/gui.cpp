@@ -19,6 +19,7 @@ GUI::~GUI() {
     
 }
 
+
 bool GUI::Initialize() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "SDL video initialization failed: %s\n", SDL_GetError());
@@ -36,17 +37,38 @@ bool GUI::Initialize() {
         return false;
     }
     
-    this->surface = SDL_GetWindowSurface(this->window);
-    Uint32 color_map = SDL_MapRGB(this->surface->format, 0xff, 0x00, 0xff);
-    SDL_FillRect(this->surface, NULL, color_map);
+    this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
+    if (!this->renderer) {
+        fprintf(stderr, "SDL Renderer creation failed: %s\n", SDL_GetError());
+        return false;
+    }
+    
+    SDL_SetRenderDrawColor(this->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    
+//    this->surface = SDL_GetWindowSurface(this->window);
+//    Uint32 color_map = SDL_MapRGB(this->surface->format, 0x00, 0x00, 0x00);
+//    SDL_FillRect(this->surface, NULL, color_map);
     
     std::cout << "gui initialized" << std::endl;
     return true;
 }
 
 void GUI::Destroy() {
+    SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
+    IMG_Quit();
     SDL_Quit();
+}
+
+
+SDL_Texture * GUI::LoadTexture(std::string path) {
+    SDL_Surface *img = IMG_Load(path.c_str());
+    if(img == NULL) {
+        fprintf(stderr, "Unable to load image %s! SDL_Image Error: %s\n", path.c_str(), IMG_GetError());
+        return NULL;
+    }
+    
+    return SDL_CreateTextureFromSurface(this->renderer, img);
 }
 
 SDL_Surface * GUI::LoadImage(std::string path) {
@@ -54,54 +76,33 @@ SDL_Surface * GUI::LoadImage(std::string path) {
     if(img == NULL) {
         fprintf(stderr, "Unable to load image %s! SDL_Image Error: %s\n", path.c_str(), IMG_GetError());
     }
-    return img;
+    
+    SDL_Surface *optimized_img = SDL_ConvertSurface(img, this->surface->format, NULL);
+    if(optimized_img == NULL){
+        fprintf(stderr, "Unable to optimize image %s! SDL_Image Error: %s\n", path.c_str(), SDL_GetError());
+        SDL_FreeSurface(optimized_img);
+        return img;
+    } else {
+        SDL_FreeSurface(img);
+        return optimized_img;
+    }
+}
+
+void GUI::PrepareRender() {
+    SDL_SetRenderDrawColor(this->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderClear(this->renderer);
 }
 
 void GUI::Render(SDL_Surface *surface, SDL_Rect rect) {
-    std::cout << "rendering surface" << std::endl;
+//    SDL_FillRect(this->surface, NULL, SDL_MapRGB(this->surface->format, 0, 0, 0));
     SDL_BlitSurface(surface, NULL, this->surface, &rect);
     SDL_UpdateWindowSurface(this->window);
 }
 
-
-
-void GUI::PollEvents() {
-    std::cout << "omg polling" << std::endl;
+void GUI::RenderTexture(SDL_Texture *texture, SDL_Rect rect) {
+    SDL_RenderCopy(this->renderer, texture, NULL, &rect);
 }
-//
-//void Pong::PollEvents(SDL_Event event) {
-//    while (SDL_PollEvent(&event)) {
-//        
-//        switch (event.type) {
-//            case SDL_QUIT:
-//                this->quit = true;
-//                break;
-//                
-//            case SDL_KEYUP:
-//                this->HandleKeyUp(event);
-//                break;
-//                
-//            default:
-//                break;
-//        }
-//        
-//    }
-//}
-//
-//void Pong::HandleKeyUp(SDL_Event event) {
-//    switch (event.key.keysym.sym) {
-//        case SDLK_UP:
-//            printf("up key pressed!\n");
-//            break;
-//            
-//        case SDLK_DOWN:
-//            printf("down key pressed!\n");
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    
-//}
-//
 
+void GUI::Update() {
+    SDL_RenderPresent(this->renderer);
+}

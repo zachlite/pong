@@ -18,11 +18,12 @@ class GUI {
 private:
     SDL_Window *window;
     SDL_Surface *surface;
+    SDL_Renderer *renderer;
     
 public:
     static const int SCREEN_HEIGHT = 480;
     static const int SCREEN_WIDTH = 640;
-    static const int FRAMES_PER_SECOND = 30;
+    static const int FRAMES_PER_SECOND = 60;
     constexpr static const float SECONDS_PER_FRAME = (1 * 1000) / GUI::FRAMES_PER_SECOND;
     
     GUI();
@@ -30,9 +31,12 @@ public:
     bool Initialize();
     void Destroy();
     SDL_Surface * LoadImage(std::string path);
-    void Render(SDL_Surface *surface, SDL_Rect rect);
-    void PollEvents();
+    SDL_Texture * LoadTexture(std::string path);
     
+    void PrepareRender();
+    void Render(SDL_Surface *surface, SDL_Rect rect);
+    void RenderTexture(SDL_Texture *texture, SDL_Rect rect);
+    void Update();
 
 };
 

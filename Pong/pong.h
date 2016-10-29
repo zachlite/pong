@@ -11,15 +11,17 @@
 
 #include "SDL2/SDL.h"
 #include "gui.h"
+#include "player.h"
 
 class Pong {
     
 private:
-    
     GUI gui;
     bool quit;
+    Player player_1;
+    Player player_2;
     
-    void HandleEvent();
+    void ProcessInput(SDL_Event e);
     
 public:
     Pong();
@@ -30,8 +32,5 @@ public:
     void Start();
     
 };
-
-
-
 
 #endif /* pong_h */
