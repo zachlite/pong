@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9212A0DD1DC46F0C003D0876 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9212A0DC1DC46F0C003D0876 /* SDL2_ttf.framework */; };
 		922FAB6B1DB9BC0200742E03 /* pong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 922FAB6A1DB9BC0200742E03 /* pong.cpp */; };
 		927D1F451DBD4180009E24E7 /* gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 927D1F441DBD4180009E24E7 /* gui.cpp */; };
 		9286E4071DC1930C008B5A82 /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9286E4061DC1930C008B5A82 /* player.cpp */; };
@@ -28,6 +29,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9212A0D61DC44C2F003D0876 /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ball.png; path = img/ball.png; sourceTree = "<group>"; };
+		9212A0DC1DC46F0C003D0876 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = ../../../../Library/Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
 		922FAB6A1DB9BC0200742E03 /* pong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pong.cpp; sourceTree = "<group>"; };
 		922FAB6C1DB9BC2000742E03 /* pong.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pong.h; sourceTree = "<group>"; };
 		927D1F441DBD4180009E24E7 /* gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gui.cpp; sourceTree = "<group>"; };
@@ -46,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9212A0DD1DC46F0C003D0876 /* SDL2_ttf.framework in Frameworks */,
 				92EA379B1DBD599B00C1882C /* SDL2_image.framework in Frameworks */,
 				92CB74871DB6EF670055C80A /* SDL2.framework in Frameworks */,
 			);
@@ -57,6 +61,7 @@
 		92CB74731DB6EF4F0055C80A = {
 			isa = PBXGroup;
 			children = (
+				9212A0DC1DC46F0C003D0876 /* SDL2_ttf.framework */,
 				92CB74861DB6EF670055C80A /* SDL2.framework */,
 				92EA379A1DBD599B00C1882C /* SDL2_image.framework */,
 				92CB747E1DB6EF4F0055C80A /* Pong */,
@@ -90,6 +95,7 @@
 		92EA379E1DBD609D00C1882C /* img */ = {
 			isa = PBXGroup;
 			children = (
+				9212A0D61DC44C2F003D0876 /* ball.png */,
 				92EA379D1DBD608A00C1882C /* test.png */,
 			);
 			name = img;

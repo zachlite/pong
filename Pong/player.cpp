@@ -69,3 +69,7 @@ void Player::HandleContinuousEvents(const Uint8 *key_states) {
         }
     }
 }
+
+void Player::Score() {
+    this->score++;
+}

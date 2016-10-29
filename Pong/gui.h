@@ -12,6 +12,7 @@
 #include <iostream>
 #include "SDL2/SDL.h"
 #include "SDL2_image/SDL_image.h"
+#include "SDL2_ttf/SDL_ttf.h"
 
 class GUI {
     
@@ -30,11 +31,9 @@ public:
     ~GUI();
     bool Initialize();
     void Destroy();
-    SDL_Surface * LoadImage(std::string path);
     SDL_Texture * LoadTexture(std::string path);
     
     void PrepareRender();
-    void Render(SDL_Surface *surface, SDL_Rect rect);
     void RenderTexture(SDL_Texture *texture, SDL_Rect rect);
     void Update();
 

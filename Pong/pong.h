@@ -13,15 +13,29 @@
 #include "gui.h"
 #include "player.h"
 
+const int BALL_WIDTH = 20;
+const int BALL_HEIGHT = 20;
+
+struct Ball {
+    SDL_Texture *texture;
+    SDL_Rect rect;
+    float vx;
+    float vy;
+};
+
 class Pong {
     
 private:
     GUI gui;
-    bool quit;
+    bool quit = false;
     Player player_1;
     Player player_2;
+    Ball ball;
     
     void ProcessInput(SDL_Event e);
+    void MoveBall();
+    void CheckForGoal();
+    void ResetBall();
     
 public:
     Pong();
