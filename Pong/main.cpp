@@ -10,29 +10,15 @@
 #include <SDL2/SDL.h>
 #include "pong.h"
 
-
 int main(int argc, const char * argv[]) {
-    
 
     Pong pong;
-
-    if (!pong.Initialize()) {
-        return 1;
+    if(!pong.Initialize()){
+        return false;
     }
     
     pong.Start();
     pong.Destroy();
-    return 0;
-
     
-//    SDL_Surface *img = NULL;
-
-//    img = SDL_LoadBMP("img.bmp");
-//    if (!img) {}
-//
-//    surface = SDL_GetWindowSurface(window);
-//    SDL_BlitSurface(img, NULL, surface, NULL);
-//    SDL_UpdateWindowSurface(window);
-//    
-
+    return 0;
 }

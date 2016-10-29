@@ -11,7 +11,6 @@
 #include "SDL2/SDL.h"
 #include "pong.h"
 
-
 Pong::Pong() {
     
 }
@@ -22,97 +21,61 @@ Pong::~Pong() {
 
 bool Pong::Initialize() {
     
-    this->quit = false;
-    
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        fprintf(stderr, "SDL video initialization failed: %s", SDL_GetError());
+    if(!this->gui.Initialize()){
         return false;
     }
     
-    this->window = SDL_CreateWindow("Pong", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (!this->window) {
-        fprintf(stderr, "SDL window creation failed: %s", SDL_GetError());
-        return false;
-    }
-    
-    this->surface = SDL_GetWindowSurface(window);
-    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0xff, 0x00, 0xee));
-    SDL_UpdateWindowSurface(window);
+    this->player_1.Initialize(PLAYER_1, gui.LoadTexture("Pong/img/test.png"));
+    this->player_2.Initialize(PLAYER_2, gui.LoadTexture("Pong/img/test.png"));
     
     return true;
 }
 
+
+void Pong::Destroy() {
+    gui.Destroy();
+}
+
 void Pong::Start() {
-    
-    int frames = 0;
+
     SDL_Event event;
+    std::string poll;
     
     while (!this->quit) {
         
         int frame_start_time = SDL_GetTicks();
     
         // handle events
-        this->PollEvents(event);
-        
+        this->ProcessInput(event);
     
-        // do things
-    
+        gui.PrepareRender();
         
-        // render
-        this->Render();
+        gui.RenderTexture(this->player_1.GetPaddle().texture, this->player_1.GetPaddle().rect);
+        gui.RenderTexture(this->player_2.GetPaddle().texture, this->player_2.GetPaddle().rect);
         
-        
-        float average_fps = frames / (SDL_GetTicks() / 1000.0f);
-        printf("%f\n", average_fps);
-        frames++;
+        gui.Update();
         
         int frame_time = SDL_GetTicks() - frame_start_time;
-        if (frame_time < SECONDS_PER_FRAME) {
-            SDL_Delay(SECONDS_PER_FRAME - frame_time);
+        
+        if (frame_time < GUI::SECONDS_PER_FRAME) {
+            SDL_Delay(GUI::SECONDS_PER_FRAME - frame_time);
         }
     }
 }
 
-void Pong::PollEvents(SDL_Event event) {
-    while (SDL_PollEvent(&event)) {
+void Pong::ProcessInput(SDL_Event e) {
+    while (SDL_PollEvent(&e)) {
         
-        switch (event.type) {
-            case SDL_QUIT:
-                this->quit = true;
-                break;
-                
-            case SDL_KEYUP:
-                this->HandleKeyUp(event);
-                break;
-                
-            default:
-                break;
+        if (e.type == SDL_QUIT) {
+            printf("see ya\n");
+            this->quit = true;
         }
-        
+    
+        this->player_1.HandleEvents(e);
+        this->player_2.HandleEvents(e);
     }
-}
-
-void Pong::HandleKeyUp(SDL_Event event) {
-    switch (event.key.keysym.sym) {
-        case SDLK_UP:
-            printf("up key pressed!\n");
-            break;
-            
-        case SDLK_DOWN:
-            printf("down key pressed!\n");
-            break;
-            
-        default:
-            break;
-    }
-
-}
-
-void Pong::Render() {
-    // draw everything on screen
-}
-
-void Pong::Destroy() {
-    SDL_DestroyWindow(this->window);
-    SDL_Quit();
+    
+    const Uint8 *state = SDL_GetKeyboardState(NULL);
+    this->player_1.HandleContinuousEvents(state);
+    this->player_2.HandleContinuousEvents(state);
 }
