@@ -12,8 +12,6 @@
 #include "SDL2/SDL.h"
 #include "pong.h"
 
-
-
 Pong::Pong() {
     
 }
@@ -23,15 +21,18 @@ Pong::~Pong() {
 }
 
 bool Pong::Initialize() {
-    
     srand((unsigned int)time(NULL));
 
     if(!this->gui.Initialize()){
         return false;
     }
     
-    this->player_1.Initialize(PLAYER_1, gui.LoadTexture("Pong/img/test.png"));
-    this->player_2.Initialize(PLAYER_2, gui.LoadTexture("Pong/img/test.png"));
+    this->net = gui.LoadTexture("Pong/img/net.png");
+
+    this->player_1.Initialize(PLAYER_1, gui.LoadTexture("Pong/img/paddle.png"));
+    this->player_2.Initialize(PLAYER_2, gui.LoadTexture("Pong/img/paddle.png"));
+    this->player_1_score = gui.CreateText("0");
+    this->player_2_score = gui.CreateText("0");
     
     this->ball.texture = gui.LoadTexture("Pong/img/ball.png");
     this->ResetBall();
@@ -45,10 +46,7 @@ void Pong::Destroy() {
 }
 
 void Pong::Start() {
-    
     SDL_Event event;
-    std::string poll;
-    
     while (!this->quit) {
         
         int frame_start_time = SDL_GetTicks();
@@ -56,22 +54,23 @@ void Pong::Start() {
         // handle events
         this->ProcessInput(event);
     
-        
-        // handle pong logic
+        // handle game logic
         this->MoveBall();
         this->CheckForGoal();
     
-        // render
+        // render textures
         gui.PrepareRender();
         
         gui.RenderTexture(this->player_1.GetPaddle().texture, this->player_1.GetPaddle().rect);
         gui.RenderTexture(this->player_2.GetPaddle().texture, this->player_2.GetPaddle().rect);
         gui.RenderTexture(this->ball.texture, this->ball.rect);
+        gui.RenderTexture(this->net, {GUI::SCREEN_WIDTH/2 - 1, 0, 2, GUI::SCREEN_HEIGHT});
+        gui.RenderTexture(this->player_1_score, {100, 30, 50, 80});
+        gui.RenderTexture(this->player_2_score, {GUI::SCREEN_WIDTH - 100 - 50, 30, 50, 80});
         
         gui.Update();
         
         int frame_time = SDL_GetTicks() - frame_start_time;
-        
         if (frame_time < GUI::SECONDS_PER_FRAME) {
             SDL_Delay(GUI::SECONDS_PER_FRAME - frame_time);
         }
@@ -79,7 +78,6 @@ void Pong::Start() {
 }
 
 void Pong::MoveBall() {
-    
     // if a ball hits a wall, reverse y
     if (this->ball.rect.y <= 0 ||
         this->ball.rect.y >= GUI::SCREEN_HEIGHT - this->ball.rect.h) {
@@ -116,6 +114,7 @@ void Pong::MoveBall() {
                 }
             }
         }
+    
         
         // add a little noise
         float y_noise = (rand() % 1000) / 600.0f;
@@ -137,11 +136,15 @@ void Pong::CheckForGoal() {
     if (this->ball.rect.x <= 0) {
         printf("player 2 scored!\n");
         this->player_2.Score();
+        int score = this->player_2.GetScore();
+        this->player_2_score = gui.CreateText(std::to_string(score));
         this->ResetBall();
         
     } else if (this->ball.rect.x >= GUI::SCREEN_WIDTH - this->ball.rect.w) {
         printf("player 1 scored!\n");
         this->player_1.Score();
+        int score = this->player_1.GetScore();
+        this->player_1_score = gui.CreateText(std::to_string(score));
         this->ResetBall();
     }
 }
@@ -160,9 +163,9 @@ void Pong::ResetBall() {
     }
     
     if (vx == 0) {
-        this->ball.vx = -3;
+        this->ball.vx = -5;
     } else {
-        this->ball.vx = 3;
+        this->ball.vx = 5;
     }
     
 }

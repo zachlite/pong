@@ -35,13 +35,14 @@
 		922FAB6C1DB9BC2000742E03 /* pong.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pong.h; sourceTree = "<group>"; };
 		927D1F441DBD4180009E24E7 /* gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gui.cpp; sourceTree = "<group>"; };
 		927D1F461DBD418B009E24E7 /* gui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gui.h; sourceTree = "<group>"; };
+		928230641DC50E5B00B8AD27 /* net.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = net.png; path = img/net.png; sourceTree = "<group>"; };
 		9286E4061DC1930C008B5A82 /* player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player.cpp; sourceTree = "<group>"; };
 		9286E4081DC19323008B5A82 /* player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
 		92CB747C1DB6EF4F0055C80A /* Pong */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Pong; sourceTree = BUILT_PRODUCTS_DIR; };
 		92CB747F1DB6EF4F0055C80A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		92CB74861DB6EF670055C80A /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		92CFBFD91DC5B947000B441B /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		92EA379A1DBD599B00C1882C /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
-		92EA379D1DBD608A00C1882C /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = test.png; path = img/test.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +81,7 @@
 		92CB747E1DB6EF4F0055C80A /* Pong */ = {
 			isa = PBXGroup;
 			children = (
+				92CFBFDA1DC5B94D000B441B /* fonts */,
 				92EA379E1DBD609D00C1882C /* img */,
 				92CB747F1DB6EF4F0055C80A /* main.cpp */,
 				922FAB6A1DB9BC0200742E03 /* pong.cpp */,
@@ -92,11 +94,19 @@
 			path = Pong;
 			sourceTree = "<group>";
 		};
+		92CFBFDA1DC5B94D000B441B /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				92CFBFD91DC5B947000B441B /* Roboto-Regular.ttf */,
+			);
+			name = fonts;
+			sourceTree = "<group>";
+		};
 		92EA379E1DBD609D00C1882C /* img */ = {
 			isa = PBXGroup;
 			children = (
+				928230641DC50E5B00B8AD27 /* net.png */,
 				9212A0D61DC44C2F003D0876 /* ball.png */,
-				92EA379D1DBD608A00C1882C /* test.png */,
 			);
 			name = img;
 			sourceTree = "<group>";

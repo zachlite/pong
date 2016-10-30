@@ -20,6 +20,7 @@ private:
     SDL_Window *window;
     SDL_Surface *surface;
     SDL_Renderer *renderer;
+    TTF_Font *font;
     
 public:
     static const int SCREEN_HEIGHT = 480;
@@ -32,6 +33,7 @@ public:
     bool Initialize();
     void Destroy();
     SDL_Texture * LoadTexture(std::string path);
+    SDL_Texture * CreateText(std::string s);
     
     void PrepareRender();
     void RenderTexture(SDL_Texture *texture, SDL_Rect rect);

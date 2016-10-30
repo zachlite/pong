@@ -36,6 +36,8 @@ bool GUI::Initialize() {
         return false;
     }
     
+    this->font = TTF_OpenFont("Pong/fonts/Roboto-Regular.ttf", 28);
+    
     this->window = SDL_CreateWindow("Pong", 0, 0, GUI::SCREEN_WIDTH, GUI::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (!this->window) {
         fprintf(stderr, "SDL window creation failed: %s\n", SDL_GetError());
@@ -50,10 +52,6 @@ bool GUI::Initialize() {
     
     SDL_SetRenderDrawColor(this->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     
-//    this->surface = SDL_GetWindowSurface(this->window);
-//    Uint32 color_map = SDL_MapRGB(this->surface->format, 0x00, 0x00, 0x00);
-//    SDL_FillRect(this->surface, NULL, color_map);
-    
     std::cout << "gui initialized" << std::endl;
     return true;
 }
@@ -61,10 +59,10 @@ bool GUI::Initialize() {
 void GUI::Destroy() {
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
+    TTF_CloseFont(this->font);
     IMG_Quit();
     SDL_Quit();
 }
-
 
 SDL_Texture * GUI::LoadTexture(std::string path) {
     SDL_Surface *img = IMG_Load(path.c_str());
@@ -74,6 +72,12 @@ SDL_Texture * GUI::LoadTexture(std::string path) {
     }
     
     return SDL_CreateTextureFromSurface(this->renderer, img);
+}
+
+SDL_Texture * GUI::CreateText(std::string s) {
+    SDL_Surface *textSurface = TTF_RenderText_Solid(font, s.c_str(), {0,0,0});
+    SDL_Texture *textTexture = SDL_CreateTextureFromSurface(this->renderer, textSurface);
+    return textTexture;
 }
 
 void GUI::PrepareRender() {

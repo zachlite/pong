@@ -47,6 +47,10 @@ Paddle Player::GetPaddle() {
     return this->paddle;
 }
 
+int Player::GetScore() {
+    return this->score;
+}
+
 void Player::HandleEvents(SDL_Event e) {
     
 }

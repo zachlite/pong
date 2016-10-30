@@ -49,6 +49,7 @@ public:
     void HandleEvents(SDL_Event e);
     void HandleContinuousEvents(const Uint8 *key_states);
     void Score();
+    int GetScore();
 };
 
 

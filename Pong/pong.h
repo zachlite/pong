@@ -31,11 +31,15 @@ private:
     Player player_1;
     Player player_2;
     Ball ball;
+    SDL_Texture *net;
+    SDL_Texture *player_1_score;
+    SDL_Texture *player_2_score;
     
     void ProcessInput(SDL_Event e);
     void MoveBall();
     void CheckForGoal();
     void ResetBall();
+    
     
 public:
     Pong();
